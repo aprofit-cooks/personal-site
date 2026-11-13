@@ -86,7 +86,6 @@ section > .dek { margin: 0 0 1.5rem; color: var(--muted); font: 400 0.9375rem/1.
   color: var(--muted); font: 400 0.8125rem/1.3 var(--sans); text-align: center; padding: 0.5rem; }
 .photo img { width: 100%; height: 100%; object-fit: cover; }
 .about p { margin: 0 0 1rem; font: 400 0.9375rem/1.7 var(--sans); color: var(--body); }
-.about p:first-child::first-letter { font-weight: 600; }
 @media (max-width: 34rem) { .about { grid-template-columns: 1fr; } .photo { max-width: 13rem; } }
 
 /* Lists of entries (writing, projects, adventures) */
@@ -138,7 +137,7 @@ section > .dek { margin: 0 0 1.5rem; color: var(--muted); font: 400 0.9375rem/1.
 .shelf li { padding: 0.85rem 0; border-bottom: 1px solid var(--rule); }
 .shelf .title { font-weight: 600; }
 .shelf .by { color: var(--ink); }
-.shelf .note { display: block; font-size: 0.8125rem; color: var(--muted); font-style: italic; margin-top: 0.15rem; }
+.shelf .note { display: block; font-size: 0.8125rem; color: var(--ink); font-style: italic; margin-top: 0.15rem; }
 
 .poster-grid { list-style: none; margin: 0; padding: 1rem 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr)); gap: 0.75rem; }
 .poster-grid li { padding: 0; border: 0; }
@@ -147,6 +146,14 @@ section > .dek { margin: 0 0 1.5rem; color: var(--muted); font: 400 0.9375rem/1.
 
 footer { margin: 4rem 0 3rem; padding-top: 1rem; border-top: 1px solid var(--rule);
   color: var(--muted); font: 400 0.8125rem/1.5 var(--sans); }
+
+#matrix-overlay { position: fixed; inset: 0; z-index: 9999; pointer-events: none; background: #000; }
+#matrix-canvas { width: 100%; height: 100%; display: block; }
+
+.masthead { position: relative; overflow: visible; }
+.signal-drop { position: absolute; font: 400 0.75rem/1 "Courier New", monospace; color: rgba(0,0,0,0.35);
+  pointer-events: none; white-space: nowrap; animation: sigfall linear forwards; }
+@keyframes sigfall { from { opacity: 0.6; transform: translateY(-30px); } to { opacity: 0; transform: translateY(200px); } }
 </style>
 </head>
 <body>
@@ -426,6 +433,8 @@ const SITE = {
       Books:    [
         // Reading now / recent
         { title: "Red Rising", by: "Pierce Brown" },
+        { title: "The Lord of the Rings Series", by: "J.R.R. Tolkien" },
+        { title: "Ranger's Apprentice Series", by: "John Flanagan" },
         { title: "Shoe Dog", by: "Phil Knight" },
         { title: "Babel", by: "R.F. Kuang" },
         { title: "Unbroken", by: "Laura Hillenbrand" },
@@ -434,13 +443,12 @@ const SITE = {
         // Favorites
         { title: "1984", by: "George Orwell" },
         { title: "Ender's Game", by: "Orson Scott Card" },
-        { title: "One Flew Over the Cuckoo's Nest", by: "Ken Kesey", poster: "https://image.tmdb.org/t/p/w342/kjWsMh72V6d8KRLV4EOoSJLT1H7.jpg" },
+        { title: "One Flew Over the Cuckoo's Nest", by: "Ken Kesey" },
         { title: "Fahrenheit 451", by: "Ray Bradbury" },
         { title: "The Hitchhiker's Guide to the Galaxy", by: "Douglas Adams" },
         { title: "Life of Pi", by: "Yann Martel" },
         { title: "Ready Player One", by: "Ernest Cline" },
         { title: "Scythe", by: "Neal Shusterman" },
-        { title: "The Lord of the Rings Series", by: "J.R.R. Tolkien" },
         // Classics & school reads
         { title: "To Kill a Mockingbird", by: "Harper Lee" },
         { title: "Of Mice and Men", by: "John Steinbeck" },
@@ -454,7 +462,6 @@ const SITE = {
         { title: "The Maze Runner", by: "James Dashner" },
         { title: "Divergent", by: "Veronica Roth" },
         { title: "The Rule of Three", by: "Eric Walters" },
-        { title: "Ranger's Apprentice Series", by: "John Flanagan" },
         { title: "Harry Potter Series", by: "J.K. Rowling" },
         { title: "Hatchet", by: "Gary Paulsen" },
         { title: "Island of the Blue Dolphins", by: "Scott O'Dell" },
@@ -471,6 +478,7 @@ const SITE = {
         { title: "No Priors", by: "Sarah Guo & Elad Gil" }
       ],
       Songs: [
+        { title: "Spotify", by: "", url: "https://open.spotify.com/user/31gv73bhbbdq462tswdxv6zi64ya", note: "Listening right now." },
         { title: "Take It Easy (Live at the Forum)", by: "Eagles" },
         { title: "Beast of Burden", by: "The Rolling Stones" },
         { title: "You Look Like You Love Me", by: "Ella Langley" },
@@ -620,11 +628,7 @@ function adventures() {
       ${has(a.why) ? `<p class="why">${esc(a.why)}</p>` : ""}
       ${media.length ? `<button class="photos-btn" data-adv="${idx}">View photos (${media.length})</button>` : ""}
     </article>`;}).join("")}
-  </section>
-  <div class="lightbox" id="lightbox">
-    <div class="lightbox-head"><h3 id="lb-title"></h3><button class="lightbox-close">\u00d7</button></div>
-    <div class="lightbox-grid" id="lb-grid"></div>
-  </div>`;
+  </section>`;
 }
 
 function openLightbox(idx) {
@@ -701,7 +705,8 @@ function render() {
   document.title = SITE.name;
   document.getElementById("app").innerHTML =
     masthead() + nav() + about() + writing() + projects() + adventures() + consume() +
-    `<footer>© ${new Date().getFullYear()} ${esc(SITE.name)}</footer>`;
+    `<footer>© ${new Date().getFullYear()} ${esc(SITE.name)}</footer>` +
+    `<div class="lightbox" id="lightbox"><div class="lightbox-head"><h3 id="lb-title"></h3><button class="lightbox-close">\u00d7</button></div><div class="lightbox-grid" id="lb-grid"></div></div>`;
 
   const tabs = [...document.querySelectorAll(".tabs button")];
   tabs.forEach(btn => btn.addEventListener("click", () => {
@@ -723,6 +728,123 @@ function render() {
   showView();
 }
 render();
+
+/* ============================================================
+   ANIMATION 1: Subtle ambient dots (persistent background)
+   ============================================================ */
+(function() {
+  const c = document.createElement("canvas");
+  c.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;z-index:9998;pointer-events:none;";
+  document.body.appendChild(c);
+  const ctx = c.getContext("2d");
+  let w, h, nodes = [];
+  const COUNT = 40;
+
+  function resize() { w = c.width = window.innerWidth; h = c.height = window.innerHeight; }
+  window.addEventListener("resize", resize); resize();
+
+  for (let i = 0; i < COUNT; i++) {
+    nodes.push({ x: Math.random() * w, y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.2, vy: (Math.random() - 0.5) * 0.2,
+      r: Math.random() * 1.2 + 1 });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 140) {
+          ctx.beginPath(); ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.strokeStyle = `rgba(0,0,0,${0.12 * (1 - d / 140)})`;
+          ctx.lineWidth = 0.6; ctx.stroke();
+        }
+      }
+    }
+    for (const n of nodes) {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0) n.x = w; if (n.x > w) n.x = 0;
+      if (n.y < 0) n.y = h; if (n.y > h) n.y = 0;
+      ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(0,0,0,0.3)"; ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ============================================================
+   ANIMATION 2: Code rain intro (plays once on load)
+   ============================================================ */
+(function() {
+  const overlay = document.createElement("div"); overlay.id = "matrix-overlay";
+  const mc = document.createElement("canvas"); mc.id = "matrix-canvas";
+  overlay.appendChild(mc); document.body.appendChild(overlay);
+
+  const ctx = mc.getContext("2d");
+  mc.width = window.innerWidth; mc.height = window.innerHeight;
+  const fontSize = 14;
+  const cols = Math.floor(mc.width / fontSize);
+  const drops = Array(cols).fill(0).map(() => Math.random() * -20 | 0);
+  const chars = "0123456789ABCDEFabcdef{}[]<>=>:://→←∞∑∂λπ$%&#@!?+*~^";
+  let frame = 0;
+
+  function rain() {
+    ctx.fillStyle = "rgba(10, 10, 10, 0.06)";
+    ctx.fillRect(0, 0, mc.width, mc.height);
+    ctx.font = fontSize + "px 'Courier New', monospace";
+    for (let i = 0; i < drops.length; i++) {
+      const ch = chars[Math.floor(Math.random() * chars.length)];
+      const brightness = 180 + Math.random() * 75;
+      ctx.fillStyle = `rgba(${brightness},${brightness},${brightness},${0.6 + Math.random() * 0.4})`;
+      ctx.fillText(ch, i * fontSize, drops[i] * fontSize);
+      if (drops[i] * fontSize > mc.height && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    }
+    frame++;
+    if (frame < 70) { requestAnimationFrame(rain); }
+    else {
+      overlay.style.transition = "opacity 1s ease-out"; overlay.style.opacity = "0";
+      setTimeout(() => overlay.remove(), 1000);
+    }
+  }
+  rain();
+})();
+
+/* ============================================================
+   ANIMATION 3: Falling signals on name hover
+   ============================================================ */
+(function() {
+  const masthead = document.querySelector(".masthead");
+  if (!masthead) return;
+  const signals = [
+    "sovereign AI", "trade shift", "eval v2.4", "series A",
+    "risk ↑", "repricing", "drift", "BRICS", "73%",
+    "split", "emerging", "deployed", "RLHF", "forecast",
+    "NATO", "chip controls", "venture", "update", "uncertainty",
+    "alignment", "reversal", "scaling", "0.81", "LATAM ++",
+    "hypothesis", "inference ↓", "policy", "signal", "model",
+    "0x4f2e", ">>", "::run", "p=0.67", "Δ+3.2%"
+  ];
+  let interval;
+  const h1link = masthead.querySelector("h1 a");
+  h1link.addEventListener("mouseenter", () => {
+    function drop() {
+      const el = document.createElement("span");
+      el.className = "signal-drop";
+      el.textContent = signals[Math.floor(Math.random() * signals.length)];
+      el.style.left = (Math.random() * 90) + "%";
+      el.style.top = "0";
+      el.style.animationDuration = (2 + Math.random() * 2) + "s";
+      masthead.appendChild(el);
+      el.addEventListener("animationend", () => el.remove());
+    }
+    drop(); interval = setInterval(drop, 200);
+  });
+  h1link.addEventListener("mouseleave", () => { clearInterval(interval); });
+})();
 </script>
 </body>
 </html>
