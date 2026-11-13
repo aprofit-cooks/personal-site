@@ -820,13 +820,34 @@ render();
   const masthead = document.querySelector(".masthead");
   if (!masthead) return;
   const signals = [
-    "sovereign AI", "trade shift", "eval v2.4", "series A",
-    "risk ↑", "repricing", "drift", "BRICS", "73%",
-    "split", "emerging", "deployed", "RLHF", "forecast",
-    "NATO", "chip controls", "venture", "update", "uncertainty",
-    "alignment", "reversal", "scaling", "0.81", "LATAM ++",
-    "hypothesis", "inference ↓", "policy", "signal", "model",
-    "0x4f2e", ">>", "::run", "p=0.67", "Δ+3.2%"
+    // geopolitics & macro
+    "sovereign AI", "trade shift", "BRICS expansion", "NATO summit", "chip controls",
+    "tariff repricing", "regime change", "sanctions", "LATAM growth", "rare earths",
+    "South China Sea", "Arctic corridor", "petrodollar", "Belt and Road", "G7 split",
+    "nuclear deterrence", "proxy conflict", "election cycle", "diplomatic cable",
+    "arms treaty", "energy transition", "migration surge", "coup attempt",
+    // tech & AI
+    "RLHF", "inference ↓", "scaling laws", "alignment", "model drift",
+    "frontier eval", "token forecast", "context window", "fine-tuning",
+    "emergent behavior", "chain of thought", "synthetic data", "open weights",
+    "GPU shortage", "transformer", "attention head", "benchmark", "hallucination",
+    "retrieval augmented", "agent loop", "tool use", "system prompt",
+    // markets & startups
+    "series A", "venture deployment", "burn rate", "PMF", "TAM",
+    "cap table", "term sheet", "ARR", "churn", "runway",
+    "seed round", "due diligence", "liquidation pref", "convertible note",
+    "YC batch", "pivot", "blitzscaling", "moat", "unit economics",
+    // prediction & data
+    "p=0.67", "73%", "confidence: 0.81", "Δ+3.2%", "Bayesian update",
+    "base rate", "calibration", "Brier score", "fat tail", "black swan",
+    "Monte Carlo", "regression", "outlier", "variance", "correlation",
+    "signal", "noise", "prior", "posterior", "expected value",
+    // vibes & fragments
+    "risk ↑", "emerging", "deployed", "hypothesis", "reversal",
+    "0x4f2e", ">>", "::run", "split", "uncertainty",
+    "counterfactual", "first principles", "asymmetric", "optionality",
+    "antifragile", "second order", "feedback loop", "network effect",
+    "Lindy effect", "power law", "convexity", "skin in the game"
   ];
   let interval;
   const h1link = masthead.querySelector("h1 a");
