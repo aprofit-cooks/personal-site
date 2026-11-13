@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Your Name</title>
+<meta name="description" content="Writing, projects, adventures, and what I’m consuming.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --paper: #ffffff;
+  --ink: #000000;
+  --body: #1a1a1a;
+  --muted: #6b6b6b;
+  --rule: #dcdcdc;
+  --link: #326891;
+  --placeholder: #f3f3f3;
+  --serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --sans: "Libre Franklin", "Helvetica Neue", Arial, sans-serif;
+  --measure: 42rem;
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #161616; --ink: #f5f5f5; --body: #d6d6d6; --muted: #9a9a9a;
+    --rule: #333333; --link: #8ab4d8; --placeholder: #222222; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #161616; --ink: #f5f5f5; --body: #d6d6d6; --muted: #9a9a9a;
+  --rule: #333333; --link: #8ab4d8; --placeholder: #222222; color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: inherit; }
+html { scroll-padding-top: env(safe-area-inset-top, 0px); scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; background: var(--paper); color: var(--body);
+  font: 400 1.1875rem/1.6 var(--serif);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--link); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; }
+img { max-width: 100%; display: block; }
+
+.wrap { max-width: var(--measure); margin: 0 auto; padding: 0 1.25rem; }
+
+/* Masthead: the one bold element */
+.masthead { padding: 3.5rem 0 1.25rem; }
+.masthead h1 {
+  margin: 0; color: var(--ink);
+  font: 700 clamp(2.75rem, 9vw, 4.75rem)/0.95 var(--serif);
+  font-variation-settings: "opsz" 60; letter-spacing: -0.025em;
+}
+.masthead .tagline { margin: 0.9rem 0 0; font-style: italic; color: var(--muted); font-size: 1.125rem; }
+.social { display: flex; flex-wrap: wrap; gap: 0.25rem 1.25rem; margin-top: 1.25rem; font: 500 0.875rem/1.4 var(--sans); }
+.social a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule); }
+.social a:hover { border-color: var(--ink); }
+
+nav.sections {
+  border-top: 1px solid var(--ink); border-bottom: 1px solid var(--rule);
+  display: flex; gap: 1.5rem; overflow-x: auto; padding: 0.7rem 0;
+  font: 500 0.875rem/1 var(--sans);
+}
+nav.sections a { color: var(--ink); text-decoration: none; white-space: nowrap; }
+nav.sections a:hover { text-decoration: underline; }
+nav.sections a.active { text-decoration: underline; }
+
+/* Sections */
+section { padding: 2.75rem 0 0.5rem; }
+section > h2 {
+  margin: 0 0 1.5rem; color: var(--ink);
+  font: 700 1.75rem/1.15 var(--serif); font-variation-settings: "opsz" 40; letter-spacing: -0.01em;
+}
+section > .dek { margin: 0 0 1.5rem; color: var(--muted); font: 400 0.9375rem/1.5 var(--sans); }
+.more { font: 500 0.875rem/1 var(--sans); color: var(--ink); }
+
+/* About */
+.about { display: grid; grid-template-columns: 13rem 1fr; gap: 1.75rem; align-items: start; }
+.photo { aspect-ratio: 4 / 5; background: var(--placeholder); display: grid; place-items: center;
+  color: var(--muted); font: 400 0.8125rem/1.3 var(--sans); text-align: center; padding: 0.5rem; }
+.photo img { width: 100%; height: 100%; object-fit: cover; }
+.about p { margin: 0 0 1rem; font: 400 0.9375rem/1.7 var(--sans); color: var(--body); }
+.about p:first-child::first-letter { font-weight: 600; }
+@media (max-width: 34rem) { .about { grid-template-columns: 1fr; } .photo { max-width: 13rem; } }
+
+/* Lists of entries (writing, projects, adventures) */
+.entry { padding: 1.25rem 0; border-top: 1px solid var(--rule); }
+.entry:first-of-type { border-top: 0; padding-top: 0; }
+.entry h3 { margin: 0; color: var(--ink); font: 600 1.375rem/1.25 var(--serif); font-variation-settings: "opsz" 28; }
+.entry h3 a { color: inherit; text-decoration: none; }
+.entry h3 a:hover { text-decoration: underline; }
+.entry .meta { margin: 0.3rem 0 0; color: var(--ink); font: 400 0.8125rem/1.4 var(--sans); }
+.entry p { margin: 0.5rem 0 0; }
+.entry .why { margin-top: 0.25rem; font: 400 0.9375rem/1.65 var(--sans); color: var(--ink); font-style: italic; }
+.entry .links { margin-top: 0.6rem; display: flex; gap: 1rem; font: 500 0.875rem/1.4 var(--sans); }
+.entry .inline-date { font: 400 1rem/1.25 var(--sans); color: var(--muted); margin-left: 0.5rem; }
+.entry .entry-dek { color: var(--ink); font: 400 0.9375rem/1.65 var(--sans); }
+.entry .ext-link { margin: 0.6rem 0 0; font: 500 0.9375rem/1.4 var(--sans); display: flex; gap: 1rem; }
+
+.photos-btn { background: none; border: 0; padding: 0; cursor: pointer;
+  font: 500 0.8125rem/1.4 var(--sans); color: var(--ink); margin-top: 0.5rem; display: inline-block; }
+.photos-btn:hover { text-decoration: underline; }
+
+.lightbox { position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.96); overflow-y: auto; display: none; }
+.lightbox.open { display: block; }
+.lightbox-head { display: flex; justify-content: space-between; align-items: center;
+  padding: 1.25rem 1.5rem; position: sticky; top: 0; background: rgba(0,0,0,0.96); z-index: 1; }
+.lightbox-head h3 { margin: 0; color: #fff; font: 600 1.25rem/1.3 var(--sans); }
+.lightbox-close { background: none; border: 0; color: #999; font: 400 1.75rem/1 var(--sans); cursor: pointer; padding: 0 0.25rem; }
+.lightbox-close:hover { color: #fff; }
+.lightbox-grid { columns: 2; column-gap: 0.5rem;
+  padding: 0 1.5rem 3rem; max-width: 54rem; margin: 0 auto; }
+.lightbox-grid > * { width: 100%; display: block; margin-bottom: 0.5rem; break-inside: avoid; }
+.lightbox-grid img { width: 100%; height: auto; display: block; }
+.lightbox-grid video { width: 100%; height: auto; display: block; background: #111; }
+@media (max-width: 34rem) { .lightbox-grid { columns: 1; padding: 0 0.75rem 2rem; } }
+
+/* Consume */
+.now { margin: 0 0 1.75rem; padding: 1.1rem 1.25rem; background: var(--placeholder); font: 400 0.875rem/1.6 var(--sans); color: var(--ink); }
+.now h3 { margin: 0 0 0.5rem; font-weight: 600; font-size: 0.875rem; }
+.now ul { margin: 0; padding: 0; list-style: none; }
+.now li { margin: 0.25rem 0; }
+.now .kind { font-weight: 500; margin-right: 0.25rem; }
+
+.tabs { display: flex; gap: 1.5rem; border-bottom: 1px solid var(--rule); overflow-x: auto; }
+.tabs button {
+  background: none; border: 0; padding: 0.6rem 0; margin-bottom: -1px; cursor: pointer;
+  font: 500 0.9375rem/1 var(--sans); color: var(--muted); border-bottom: 2px solid transparent; white-space: nowrap;
+}
+.tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+.shelf { list-style: none; margin: 0; padding: 0; font: 400 0.9375rem/1.5 var(--sans); color: var(--ink); }
+.shelf li { padding: 0.85rem 0; border-bottom: 1px solid var(--rule); }
+.shelf .title { font-weight: 600; }
+.shelf .by { color: var(--ink); }
+.shelf .note { display: block; font-size: 0.8125rem; color: var(--muted); font-style: italic; margin-top: 0.15rem; }
+
+.poster-grid { list-style: none; margin: 0; padding: 1rem 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr)); gap: 0.75rem; }
+.poster-grid li { padding: 0; border: 0; }
+.poster-grid img { width: 100%; aspect-ratio: 2 / 3; object-fit: cover; display: block; }
+.poster-grid .poster-title { display: block; margin-top: 0.3rem; font: 400 0.75rem/1.3 var(--sans); color: var(--ink); text-align: center; }
+
+footer { margin: 4rem 0 3rem; padding-top: 1rem; border-top: 1px solid var(--rule);
+  color: var(--muted); font: 400 0.8125rem/1.5 var(--sans); }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<noscript><div class="wrap"><p>This site needs JavaScript to render.</p></div></noscript>
+
+<script>
+/* ============================================================
+   CONTENT — edit only this object. Empty strings / arrays hide things.
+   ============================================================ */
+const SITE = {
+  name: "Alexander Profit",
+  tagline: "Love technology, people, and places. Wandering, always.",
+  photo: "assets/cover photo/IMG_4089.jpeg",
+  email: "aprofit@stanford.edu",
+  phone: "+1 650 250 3100",
+  bio: [
+    "I’m Alec, a senior studying international relations and computer science at Stanford.",
+    "I’ve worked on deploying AI for enterprises and governments across Latin America, building go-to-market functions at early-stage startups, and evaluating frontier AI models. I’m broadly interested in startups, emerging technologies, and geopolitics, particularly with respect to how these things will continue to shape the world around us."
+  ],
+  social: [
+    { label: "X", url: "https://x.com/alecccprofit" },
+    { label: "Instagram", url: "https://instagram.com/alecprofit" },
+    { label: "LinkedIn", url: "https://www.linkedin.com/in/alecprofit/" },
+    { label: "Email", url: "mailto:profitalec@gmail.com" },
+    { label: "Resume", url: "" }
+  ],
+  substack: "",
+
+  writing: [
+    { title: "Bukele's Mano Dura: Questions of Sustainability in El Salvador", date: "2024-04", dek: "On Bukele's crackdown on gang violence, its democratic tradeoffs, and whether El Salvador's newfound security can last. Written for the Rice Journal of Public Policy.", url: "https://ricejpp.wixsite.com/home/post/bukele-s-mano-dura-questions-of-sustainability-in-el-salvador" },
+    { title: "Train Wreck: Obrador's Haste Creates Unnecessary Risks", date: "2024-03", dek: "The environmental, political, and human costs of Mexico's Tren Maya project. Written for the Rice Journal of Public Policy.", url: "https://ricejpp.wixsite.com/home/post/train-wreck-obrador-s-haste-creates-unnecessary-risks" },
+    { title: "The AfD Surge in Germany: A Coalition Based Response", date: "2023-12", dek: "How Germany's mainstream parties can respond to the rise of the AfD. Written for the Rice Journal of Public Policy.", url: "https://ricejpp.wixsite.com/home/post/the-afd-surge-in-germany-a-coalition-based-response" }
+  ],
+
+  projects: [
+    {
+      title: "StreamLine", date: "2026-06", status: "",
+      dek: "An AI-powered decision intelligence platform that uses LLM-based workflows to synthesize complex news, policy, and geopolitical developments. Designed around agentic analysis, structured disagreement, and uncertainty estimation to distinguish consensus from competing hypotheses. A probabilistic forecasting layer, inspired by prediction markets, models possible outcomes and tracks the signals that could change them. An experiment in using AI to improve collective sensemaking beyond traditional news feeds.",
+      github: "https://github.com/aprofit-cooks/Streamline",
+      live: "https://streamline-app-two.vercel.app"
+    },
+    {
+      title: "Political Relationship Network", date: "2026-11", status: "",
+      dek: "An interactive 3D network modeling 47 documented political relationships relevant to U.S. foreign-aid policy. Represents individuals and organizations as nodes in a weighted graph, with edges scored using a custom multidimensional influence function incorporating relationship strength, political power, and policy alignment. Built with Three.js and force-directed graph simulations, featuring dynamic filtering, influence rankings, and source-level inspection. Developed as part of a broader computational research project on political influence and foreign-aid policy.",
+      github: "https://github.com/aprofit-cooks/cooper-relationship-map",
+      live: "https://cooper-relationship-map.netlify.app/"
+    },
+    {
+      title: "Moral Drift", date: "2026-05", status: "",
+      dek: "A cross-model evaluation framework investigating the stability of moral reasoning in frontier LLMs under adversarial prompting and rhetorical perturbations. Ran 1,447 evaluations across 14 models, 15 ethical dilemmas, and seven prompt framings, using an independent LLM-as-judge ensemble. Quantified reasoning drift, consequentialist tendencies, and harmful-action endorsement through variance analysis, inter-rater reliability, and bootstrapped confidence intervals. Developed under the guidance of Professor Andrew B. Hall (Stanford GSB, now MTS at Anthropic).",
+      github: "",
+      live: "https://consequentialisteval.netlify.app/"
+    },
+    {
+      title: "DailyHabit", date: "2026", status: "In progress",
+      dek: "A cross-platform habit-tracking app built with React Native, Expo, and TypeScript, structured as a modular pnpm/Turborepo monorepo. Features a framework-independent domain layer, shared Zod validation schemas, reusable UI components, and secure authentication with Supabase row-level security. Backend architecture incorporates typed database operations, scheduled Edge Functions for habit scoring, and fuzzy string matching for habit identification. Currently in development.",
+      github: "https://github.com/philipsantiago/DailyHabit",  // private — link hidden until public
+      live: ""
+    }
+  ],
+
+  adventures: [
+    {
+      title: "Water Polo",
+      subtitle: "Stanford, California",
+      body: "Team manager for the 2026 Stanford men's varsity team. Joined the club water polo team. Turns out the hardest sport to learn is also the most fun. #FirstPrinciples #ChampionshipPlays",
+      why: "",
+      photos: [
+        "assets/Water Polo/IMG_7865.jpeg",
+        "assets/Water Polo/IMG_9539.jpeg",
+        "assets/Water Polo/IMG_0225.jpeg",
+        "assets/Water Polo/e43803fd-a7f3-42c9-9285-6a32e146fa9f.jpg"
+      ]
+    },
+    {
+      title: "Summer in Mexico City",
+      subtitle: "Summer 2026 - Mexico City, Mexico",
+      body: "Spent the summer at Primero, a startup backed by Kaszek, 8VC, Definition, and Conviction, working on sovereign AI deployments for enterprises and governments across Latin America. Oh, and the World Cup was there.",
+      why: "",
+      photos: [
+        "assets/Mexico City/IMG_3037.jpeg",
+        "assets/Mexico City/8e563449-347a-4883-afa5-ab007878dff5.jpg",
+        "assets/Mexico City/IMG_2993.jpeg",
+        "assets/Mexico City/6059d45a-de96-4247-abe5-08354ad00399.jpg",
+        "assets/Mexico City/IMG_9311.JPG"
+      ]
+    },
+    {
+      title: "Chasing the Northern Lights",
+      subtitle: "February 2026 - Troms\u00f8, Norway",
+      body: "Three things have to line up: darkness, clear skies, and geomagnetic activity. Went north to find all three.",
+      why: "",
+      photos: [
+        "assets/Norway/IMG_0529.jpeg",
+        "assets/Norway/82221a61-fd7f-4342-9f65-7a366c5964e0.jpg",
+        "assets/Norway/fc53f6e5-c1f6-4dd3-adaa-cc9751efe26b.jpg",
+        "assets/Norway/IMG_0532.jpeg",
+        "assets/Norway/1f3694f3-f370-43ea-80e9-1015b3fcec5b.jpg",
+        "assets/Norway/IMG_0541.jpeg",
+        "assets/Norway/IMG_0583.jpeg",
+        "assets/Norway/3cae0923-71bb-4b0c-a9a5-5acc114c7198.jpg",
+        "assets/Norway/b34fd7bc-e90e-4fae-883f-e7b049602c51.jpg",
+        "assets/Norway/IMG_0596.JPG",
+        "assets/Norway/IMG_0563.jpeg"
+      ]
+    },
+    {
+      title: "Australia Study Abroad",
+      subtitle: "Fall 2025 - Australia's East Coast",
+      body: "Reefs, rainforests, bioluminescence, and the Milky Way. Spent months moving up Australia's east coast, living out of two backpacks, and getting open-water scuba certified.",
+      why: "",
+      photos: [
+        "assets/Australia/b184d050-0327-4af0-bf8a-adae3308b7c7.jpg",
+        "assets/Australia/4bc4ee8a-c3fc-4c0a-bac7-dc1b54ad1399.jpg",
+        "assets/Australia/DSC02382.jpeg",
+        "assets/Australia/DSC02385.jpeg",
+        "assets/Australia/FA95EEA4-FDD5-452D-9F76-392BE45AF45F.JPG",
+        "assets/Australia/DSC02711.JPG",
+        "assets/Australia/GOPR0771.JPG",
+        "assets/Australia/FullSizeRender.jpg",
+        "assets/Australia/6261d68a-c78b-4c81-9da1-5e898547577c.jpg",
+        "assets/Australia/DSC03719.JPG",
+        "assets/Australia/841b8ed8-69a9-4294-bbbf-fd4003b83cb5.jpg",
+        "assets/Australia/IMG_1184.JPG",
+        "assets/Australia/53839e29-b57b-40e1-b7e1-12b29aaa214a.jpg",
+        "assets/Australia/c24ec01b-2084-49d5-8394-ff9111c6b60f.jpg",
+        "assets/Australia/143c83d5-ddca-4a5a-938a-c1c5edbef8e8.jpg",
+        "assets/Australia/7E12E254-82DC-44A2-8BE5-0E0FF3BFCCC2.JPG",
+        "assets/Australia/IMG_7492.JPG",
+        "assets/Australia/IMG_9677.jpeg",
+        "assets/Australia/71b3f338-93b6-41ba-a483-6175b4a4a054.jpg",
+        "assets/Australia/GOPR1483.JPG",
+        "assets/Australia/IMG_0837.JPG",
+        "assets/Australia/IMG_0968.jpeg",
+        "assets/Australia/IMG_1040.JPG",
+        "assets/Australia/FullSizeRender.jpeg",
+        "assets/Australia/fd077118-a1b9-4c35-ace9-079dbf5e8787.jpg",
+        "assets/Australia/ece5cea3-df6e-42c1-9942-059e5a93efba.jpg",
+        "assets/Australia/DSC02552.jpeg",
+        "assets/Australia/DSC02555.jpeg",
+        "assets/Australia/DSCF8471-4.JPG",
+        "assets/Australia/DSCF8475.jpeg",
+        "assets/Australia/IMG_5629.jpeg",
+        "assets/Australia/13DEC612-4887-4F0E-8F1F-3F7DDE21D9E2.JPG",
+        "assets/Australia/IMG_6282.jpeg",
+        "assets/Australia/IMG_8035.JPG",
+        "assets/Australia/PB180107.JPEG"
+      ]
+    },
+    {
+      title: "Summer in Asia",
+      subtitle: "Summer 2025 - Asia",
+      body: "Spent the summer traveling through Asia while doing legal research for Gamma Law. Working remote can be really fun if you let it.",
+      why: "",
+      photos: [
+        "assets/Asia/596A7405.JPG",
+        "assets/Asia/IMG_4907.jpeg",
+        "assets/Asia/596A7548.JPG",
+        "assets/Asia/IMG_4602.mov",
+        "assets/Asia/596A7483.JPG",
+        "assets/Asia/596A7614.JPG",
+        "assets/Asia/596A7499.JPG",
+        "assets/Asia/596A7972.JPG",
+        "assets/Asia/596A8105.JPG",
+        "assets/Asia/596A8214.JPG",
+        "assets/Asia/596A8205.JPG",
+        "assets/Asia/596A8338.JPG",
+        "assets/Asia/IMG_4790.JPG",
+        "assets/Asia/c3e24855-fb3a-44b7-936f-d19f88299a9a.jpg",
+        "assets/Asia/IMG_4565.jpeg",
+        "assets/Asia/IMG_4776.JPG",
+        "assets/Asia/FotoAlecSteve.png",
+        "assets/Asia/IMG_4554.jpeg"
+      ]
+    },
+    {
+      title: "Summer in Colombia",
+      subtitle: "Summer 2024 - Medell\u00edn, Colombia",
+      body: "Based in Medell\u00edn, working with an education nonprofit on fundraising and growth. Spent the rest of my time getting to know Colombia.",
+      why: "",
+      photos: [
+        "assets/Colombia/75828cac-e0e1-491c-a5a2-e14ce4ab8944.jpg",
+        "assets/Colombia/8be83eeb-b5f7-4405-80ac-7f5e21869e98.jpg",
+        "assets/Colombia/IMG_4613.jpeg",
+        "assets/Colombia/IMG_2839.JPG",
+        "assets/Colombia/IMG_4265.jpeg",
+        "assets/Colombia/592c4b62-2744-48a1-a818-55406963271e.mov",
+        "assets/Colombia/IMG_4260.jpeg",
+        "assets/Colombia/IMG_5308.jpeg",
+        "assets/Colombia/IMG_3771.jpeg",
+        "assets/Colombia/IMG_5554.jpeg",
+        "assets/Colombia/IMG_4385.jpeg",
+        "assets/Colombia/IMG_4390.jpeg",
+        "assets/Colombia/IMG_4397.jpeg",
+        "assets/Colombia/0fc4e8d2-c53c-4c6f-82be-ed37c4142eb9.jpg"
+      ]
+    },
+    {
+      title: "Guatemala",
+      subtitle: "Antigua Guatemala",
+      body: "Hiked Volc\u00e1n de Fuego and Acatenango, 4,000 meters of elevation. Did it with bronchitis and half the hike with no shoes.",
+      why: "",
+      photos: [
+        "assets/Guatemala/a1080b4e-633a-4435-ac4c-37e77e0152dc.jpg",
+        "assets/Guatemala/IMG_1803.JPG",
+        "assets/Guatemala/IMG_1786.JPG",
+        "assets/Guatemala/78fecb17-ca36-43a2-af86-37a79eb07845.jpg",
+        "assets/Guatemala/1aea8ba3-79f5-4686-b1c9-ab1394de5229.jpg",
+        "assets/Guatemala/IMG_0136.JPG",
+        "assets/Guatemala/IMG_1534.jpeg",
+        "assets/Guatemala/IMG_1712.JPG",
+        "assets/Guatemala/IMG_0636.JPG",
+        "assets/Guatemala/6027c912-f9b7-47b0-95d7-c41c4be3fb5e.jpg",
+        "assets/Guatemala/IMG_9136.jpeg",
+        "assets/Guatemala/502da3e4-d511-437b-959c-a26563333fa1.jpg",
+        "assets/Guatemala/IMG_1670.JPG",
+        "assets/Guatemala/IMG_1521.jpeg",
+        "assets/Guatemala/IMG_1531.MOV",
+        "assets/Guatemala/IMG_8403.MP4",
+        "assets/Guatemala/IMG_1724.JPG",
+        "assets/Guatemala/IMG_8861.MP4",
+        "assets/Guatemala/IMG_1655.JPG"
+      ]
+    },
+    {
+      title: "Nature, Camping & Backpacking",
+      subtitle: "",
+      body: "Into the wild.",
+      why: "",
+      photos: [
+        "assets/Nature/IMG_0088.jpeg",
+        "assets/Nature/IMG_0405.jpeg",
+        "assets/Nature/IMG_4132.JPG",
+        "assets/Nature/IMG_2727.jpeg",
+        "assets/Nature/IMG_4780.mov",
+        "assets/Nature/IMG_2063.jpeg",
+        "assets/Nature/IMG_4130.JPG",
+        "assets/Nature/IMG_2108.jpeg",
+        "assets/Nature/IMG_2815.jpeg",
+        "assets/Nature/IMG_2111.JPG",
+        "assets/Nature/IMG_2109.JPG",
+        "assets/Nature/IMG_0154.JPG",
+        "assets/Nature/IMG_9721.JPG",
+        "assets/Nature/IMG_9725.JPG",
+        "assets/Nature/IMG_2789.JPG",
+        "assets/Nature/IMG_2689.jpeg",
+        "assets/Nature/IMG_0304.PNG",
+        "assets/Nature/IMG_2082.jpeg",
+        "assets/Nature/IMG_2367.JPG",
+        "assets/Nature/IMG_9729.JPG"
+      ]
+    },
+    {
+      title: "Urban Exploration (UrbEx)",
+      subtitle: "",
+      body: "Spent a few years exploring things most people never see, in a clandestine manner. Retired (mostly) now due to updated risk-reward calculations.",
+      why: "",
+      photos: [
+        "assets/Urbex/IMG_9677.jpeg",
+        "assets/Urbex/IMG_2230.JPG",
+        "assets/Urbex/cm-chat-media-video-1:47aedeed-7c73-4388-8deb-71aa9a34c98d:284:6:0.mov",
+        "assets/Urbex/IMG_2147.JPG",
+        "assets/Urbex/IMG_0747.MOV",
+        "assets/Urbex/IMG_1088.jpeg"
+      ]
+    }
+  ],
+
+  consume: {
+    letterboxd: "https://boxd.it/5TxBl",
+    now: [
+      { kind: "Reading", title: "Red Rising", by: "Pierce Brown" },
+      { kind: "Listening", title: "Take It Easy (Live at the Forum)", by: "Eagles" }
+    ],
+    shelves: {
+      Books:    [
+        // Reading now / recent
+        { title: "Red Rising", by: "Pierce Brown" },
+        { title: "Shoe Dog", by: "Phil Knight" },
+        { title: "Babel", by: "R.F. Kuang" },
+        { title: "Unbroken", by: "Laura Hillenbrand" },
+        { title: "Into the Wild", by: "Jon Krakauer" },
+        { title: "The Road", by: "Cormac McCarthy" },
+        // Favorites
+        { title: "1984", by: "George Orwell" },
+        { title: "Ender's Game", by: "Orson Scott Card" },
+        { title: "One Flew Over the Cuckoo's Nest", by: "Ken Kesey", poster: "https://image.tmdb.org/t/p/w342/kjWsMh72V6d8KRLV4EOoSJLT1H7.jpg" },
+        { title: "Fahrenheit 451", by: "Ray Bradbury" },
+        { title: "The Hitchhiker's Guide to the Galaxy", by: "Douglas Adams" },
+        { title: "Life of Pi", by: "Yann Martel" },
+        { title: "Ready Player One", by: "Ernest Cline" },
+        { title: "Scythe", by: "Neal Shusterman" },
+        { title: "The Lord of the Rings Series", by: "J.R.R. Tolkien" },
+        // Classics & school reads
+        { title: "To Kill a Mockingbird", by: "Harper Lee" },
+        { title: "Of Mice and Men", by: "John Steinbeck" },
+        { title: "Lord of the Flies", by: "William Golding" },
+        { title: "The Giver", by: "Lois Lowry" },
+        { title: "Robinson Crusoe", by: "Daniel Defoe" },
+        // Series & YA
+        { title: "The Martian", by: "Andy Weir" },
+        { title: "The Hunger Games Series", by: "Suzanne Collins" },
+        { title: "The 5th Wave", by: "Rick Yancey" },
+        { title: "The Maze Runner", by: "James Dashner" },
+        { title: "Divergent", by: "Veronica Roth" },
+        { title: "The Rule of Three", by: "Eric Walters" },
+        { title: "Ranger's Apprentice Series", by: "John Flanagan" },
+        { title: "Harry Potter Series", by: "J.K. Rowling" },
+        { title: "Hatchet", by: "Gary Paulsen" },
+        { title: "Island of the Blue Dolphins", by: "Scott O'Dell" },
+        { title: "Percy Jackson Series", by: "Rick Riordan" }
+      ],
+      Blogs:    [],
+      Podcasts: [
+        { title: "David Senra Podcast", by: "David Senra" },
+        { title: "Founders", by: "David Senra" },
+        { title: "All-In", by: "Chamath, Jason, Sacks & Friedberg" },
+        { title: "Invest Like the Best", by: "Patrick O'Shaughnessy" },
+        { title: "The Knowledge Project", by: "Shane Parrish" },
+        { title: "Inferencia", by: "Jos\u00e9 Antonio Murillo & Jos\u00e9 Luis Sabau" },
+        { title: "No Priors", by: "Sarah Guo & Elad Gil" }
+      ],
+      Songs: [
+        { title: "Take It Easy (Live at the Forum)", by: "Eagles" },
+        { title: "Beast of Burden", by: "The Rolling Stones" },
+        { title: "You Look Like You Love Me", by: "Ella Langley" },
+        { title: "Money for Nothing", by: "Dire Straits" },
+        { title: "A Lingering Love", by: "The Fruit Bats" }
+      ],
+      Channels: [],
+      Movies:   [
+        { title: "Letterboxd", by: "", url: "https://boxd.it/5TxBl", note: "Not fully updated." },
+        { title: "The Lives of Others", by: "Florian Henckel von Donnersmarck", poster: "https://image.tmdb.org/t/p/w342/cVUDMnskSc01rdbyH0tLATTJUdP.jpg" },
+        { title: "Mississippi Burning", by: "Alan Parker", poster: "https://image.tmdb.org/t/p/w342/hTv8Bkq3W1vwKi1IWCLWQW9PNU4.jpg" },
+        { title: "Casablanca", by: "Michael Curtiz", poster: "https://image.tmdb.org/t/p/w342/lGCEKlJo2CnWydQj7aamY7s1S7Q.jpg" },
+        { title: "Schindler's List", by: "Steven Spielberg", poster: "https://image.tmdb.org/t/p/w342/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg" },
+        { title: "Cinema Paradiso", by: "Giuseppe Tornatore", poster: "https://image.tmdb.org/t/p/w342/aRgPnx4aPS96f7CnhJH7IG5dN1A.jpg" },
+        { title: "The Silence of the Lambs", by: "Jonathan Demme", poster: "https://image.tmdb.org/t/p/w342/uS9m8OBk1A8eM9I042bx8XXpqAq.jpg" },
+        { title: "Das Boot", by: "Wolfgang Petersen", poster: "https://image.tmdb.org/t/p/w342/hNfAYNCMRthp9iruF5Q6S1z4bVA.jpg" },
+        { title: "There Will Be Blood", by: "Paul Thomas Anderson", poster: "https://image.tmdb.org/t/p/w342/fa0RDkAlCec0STeMNAhPaF89q6U.jpg" },
+        { title: "The Grand Budapest Hotel", by: "Wes Anderson", poster: "https://image.tmdb.org/t/p/w342/eWdyYQreja6JGCzqHWXpWHDrrPo.jpg" },
+        { title: "Green Book", by: "Peter Farrelly", poster: "https://image.tmdb.org/t/p/w342/7BsvSuDQuoqhWmU2fL7W2GOcZHU.jpg" },
+        { title: "Spotlight", by: "Tom McCarthy", poster: "https://image.tmdb.org/t/p/w342/8DPGG400FgaFWaqcv11n8mRd2NG.jpg" },
+        { title: "City of God", by: "Fernando Meirelles", poster: "https://image.tmdb.org/t/p/w342/k7eYdWvhYQyRQoU2TB2A2Xu2TfD.jpg" },
+        { title: "Memories of Murder", by: "Bong Joon-ho", poster: "https://image.tmdb.org/t/p/w342/jcgUjx1QcupGzjntTVlnQ15lHqy.jpg" },
+        { title: "No Country for Old Men", by: "Joel & Ethan Coen", poster: "https://image.tmdb.org/t/p/w342/6d5XOczc226jECq0LIX0siKtgHR.jpg" },
+        { title: "Whiplash", by: "Damien Chazelle", poster: "https://image.tmdb.org/t/p/w342/7fn624j5lj3xTme2SgiLCeuedmO.jpg" },
+        { title: "Interstellar", by: "Christopher Nolan", poster: "https://image.tmdb.org/t/p/w342/yQvGrMoipbRoddT0ZR8tPoR7NfX.jpg" },
+        { title: "The Shawshank Redemption", by: "Frank Darabont", poster: "https://image.tmdb.org/t/p/w342/9cqNxx0GxF0bflZmeSMuL5tnGzr.jpg" },
+        { title: "Good Will Hunting", by: "Gus Van Sant", poster: "https://image.tmdb.org/t/p/w342/z2FnLKpFi1HPO7BEJxdkv6hpJSU.jpg" },
+        { title: "Dead Poets Society", by: "Peter Weir", poster: "https://image.tmdb.org/t/p/w342/erzbMlcNHOdx24AXOcn2ZKA7R1q.jpg" },
+        { title: "Gone Girl", by: "David Fincher", poster: "https://image.tmdb.org/t/p/w342/ts996lKsxvjkO2yiYG0ht4qAicO.jpg" },
+        { title: "Nightcrawler", by: "Dan Gilroy", poster: "https://image.tmdb.org/t/p/w342/j9HrX8f7GbZQm1BrBiR40uFQZSb.jpg" },
+        { title: "Prisoners", by: "Denis Villeneuve", poster: "https://image.tmdb.org/t/p/w342/uhviyknTT5cEQXbn6vWIqfM4vGm.jpg" },
+        { title: "The Departed", by: "Martin Scorsese", poster: "https://image.tmdb.org/t/p/w342/nT97ifVT2J1yMQmeq20Qblg61T.jpg" },
+        { title: "Ford v Ferrari", by: "James Mangold", poster: "https://image.tmdb.org/t/p/w342/dR1Ju50iudrOh3YgfwkAU1g2HZe.jpg" },
+        { title: "Pulp Fiction", by: "Quentin Tarantino", poster: "https://image.tmdb.org/t/p/w342/vQWk5YBFWF4bZaofAbv0tShwBvQ.jpg" },
+        { title: "Django Unchained", by: "Quentin Tarantino", poster: "https://image.tmdb.org/t/p/w342/7oWY8VDWW7thTzWh3OKYRkWUlD5.jpg" },
+        { title: "Inglourious Basterds", by: "Quentin Tarantino", poster: "https://image.tmdb.org/t/p/w342/aupnPtagH9JVBuMrGEanf4iqXEQ.jpg" },
+        { title: "Reservoir Dogs", by: "Quentin Tarantino", poster: "https://image.tmdb.org/t/p/w342/xi8Iu6qyTfyZVDVy60raIOYJJmk.jpg" },
+        { title: "A Clockwork Orange", by: "Stanley Kubrick", poster: "https://image.tmdb.org/t/p/w342/4sHeTAp65WrSSuc05nRBKddhBxO.jpg" },
+        { title: "Gladiator", by: "Ridley Scott", poster: "https://image.tmdb.org/t/p/w342/aDb548BOkFfI4nFm0kx8A3Ezh7H.jpg" },
+        { title: "Mad Max: Fury Road", by: "George Miller", poster: "https://image.tmdb.org/t/p/w342/ulcAi4dKpAjHwYGS08vNyx9H6I9.jpg" },
+        { title: "The Batman", by: "Matt Reeves", poster: "https://image.tmdb.org/t/p/w342/74xTEgt7R36Fpooo50r9T25onhq.jpg" },
+        { title: "Casino Royale", by: "Martin Campbell", poster: "https://image.tmdb.org/t/p/w342/lMrxYKKhd4lqRzwUHAy5gcx9PSO.jpg" },
+        { title: "Knives Out", by: "Rian Johnson", poster: "https://image.tmdb.org/t/p/w342/pThyQovXQrw2m0s9x82twj48Jq4.jpg" },
+        { title: "My Octopus Teacher", by: "Pippa Ehrlich", poster: "https://image.tmdb.org/t/p/w342/hvTVZb7hBC8tZAGoEhH5eiMJu2B.jpg" },
+        { title: "Ocean's Eleven", by: "Steven Soderbergh", poster: "https://image.tmdb.org/t/p/w342/hQQCdZrsHtZyR6NbKH2YyCqd2fR.jpg" },
+        { title: "The Girl with the Dragon Tattoo", by: "David Fincher", poster: "https://image.tmdb.org/t/p/w342/8bokS83zGdhaXgN9tjidUKmAftW.jpg" },
+        { title: "A Few Good Men", by: "Rob Reiner", poster: "https://image.tmdb.org/t/p/w342/rLOk4z9zL1tTukIYV56P94aZXKk.jpg" },
+        { title: "The Court Jester", by: "Melvin Frank", poster: "https://image.tmdb.org/t/p/w342/pPCOAipDP0sm8SLChpTMBPdCiqB.jpg" },
+        { title: "The Odyssey", by: "Homer / Various", poster: "https://image.tmdb.org/t/p/w342/5rhTDKUhPYvpdQIijFIs5VoWsON.jpg" },
+        { title: "The Usual Suspects", by: "Bryan Singer", poster: "https://image.tmdb.org/t/p/w342/99X2SgyFunJFXGAYnDv3sb9pnUD.jpg" },
+        { title: "One Flew Over the Cuckoo's Nest", by: "Milos Forman", poster: "https://image.tmdb.org/t/p/w342/kjWsMh72V6d8KRLV4EOoSJLT1H7.jpg" },
+        { title: "The Truman Show", by: "Peter Weir", poster: "https://image.tmdb.org/t/p/w342/vuza0WqY239yBXOadKlGwJsZJFE.jpg" },
+        { title: "The Green Mile", by: "Frank Darabont", poster: "https://image.tmdb.org/t/p/w342/8VG8fDNiy50H4FedGwdSVUPoaJe.jpg" },
+        { title: "10 Things I Hate About You", by: "Gil Junger", poster: "https://image.tmdb.org/t/p/w342/ujERk3aKABXU3NDXOAxEQYTHe9A.jpg" },
+        { title: "Ferris Bueller's Day Off", by: "John Hughes", poster: "https://image.tmdb.org/t/p/w342/9LTQNCvoLsKXP0LtaKAaYVtRaQL.jpg" },
+        { title: "War Dogs", by: "Todd Phillips", poster: "https://image.tmdb.org/t/p/w342/mDcPRjZC1bb6LavFU3gwsWdVfCM.jpg" },
+        { title: "McFarland, USA", by: "Niki Caro", poster: "https://image.tmdb.org/t/p/w342/yyhniD8A7Mv6SOn8oo1Ba2K0mKc.jpg" },
+        { title: "Fantastic Mr. Fox", by: "Wes Anderson", poster: "https://image.tmdb.org/t/p/w342/bOVr292mwn3jxr1e0NmUPM1rcjo.jpg" },
+        { title: "V for Vendetta", by: "James McTeigue", poster: "https://image.tmdb.org/t/p/w342/1avD1JeaRiJX5M4ahPdZPypGoGN.jpg" },
+        { title: "Argo", by: "Ben Affleck", poster: "https://image.tmdb.org/t/p/w342/m5gPWFZFIp4UJFABgWyLkbXv8GX.jpg" }
+      ]
+    }
+  }
+};
+
+/* ============================================================
+   RENDER — no need to touch below for content changes.
+   ============================================================ */
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const has = v => Array.isArray(v) ? v.length > 0 : Boolean(v);
+const fmtDate = ym => {
+  if (!ym) return "";
+  const [y, m] = ym.split("-").map(Number);
+  return m ? new Date(y, m - 1).toLocaleDateString("en-US", { month: "long", year: "numeric" }) : String(y);
+};
+const link = (url, text) => has(url) ? `<a href="${esc(url)}"${/^https?:/.test(url) ? ' target="_blank" rel="noopener"' : ""}>${esc(text)}</a>` : "";
+const byDateDesc = arr => [...arr].sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+
+function masthead() {
+  const social = SITE.social.filter(s => has(s.url)).map(s => link(s.url, s.label)).join("");
+  return `<header class="masthead">
+    <h1><a href="#about" style="color:inherit;text-decoration:none">${esc(SITE.name)}</a></h1>
+    ${has(SITE.tagline) ? `<p class="tagline">${esc(SITE.tagline)}</p>` : ""}
+    ${social ? `<div class="social">${social}</div>` : ""}
+  </header>`;
+}
+
+function nav() {
+  const items = [["about", "About"], ["writing", "Writing"], ["projects", "Projects"], ["adventures", "Adventures"], ["consume", "Consume"]];
+  return `<nav class="sections" aria-label="Sections">${items.map(([id, l]) => `<a href="#${id}">${l}</a>`).join("")}</nav>`;
+}
+
+function about() {
+  const photo = has(SITE.photo) ? `<img src="${esc(SITE.photo)}" alt="Photo of ${esc(SITE.name)}">` : "Add a photo in SITE.photo";
+  return `<section id="about" aria-label="About">
+    <div class="about">
+      <div class="photo">${photo}</div>
+      <div>
+        ${SITE.bio.map(p => `<p>${esc(p)}</p>`).join("")}
+        <p class="more">${has(SITE.email) ? `<a href="mailto:${esc(SITE.email)}">${esc(SITE.email)}</a>` : ""}${has(SITE.email) && has(SITE.phone) ? `&ensp;` : ""}${has(SITE.phone) ? `<a href="tel:${esc(SITE.phone.replace(/\s/g, ""))}">${esc(SITE.phone)}</a>` : ""}</p>
+      </div>
+    </div>
+  </section>`;
+}
+
+function writing() {
+  const fmtShort = ym => { if (!ym) return ""; const [y, m] = ym.split("-"); return m ? `${m}/${y.slice(2)}` : y; };
+  return `<section id="writing">
+    <h2>Writing</h2>
+    ${byDateDesc(SITE.writing).map(w => `<article class="entry">
+      <h3>${esc(w.title)}${has(w.date) ? `<span class="inline-date">${esc(fmtShort(w.date))}</span>` : ""}</h3>
+      ${has(w.dek) ? `<p class="entry-dek">${esc(w.dek)}</p>` : ""}
+      ${has(w.url) ? `<p class="ext-link"><a href="${esc(w.url)}" target="_blank" rel="noopener">Link \u2197</a></p>` : ""}
+    </article>`).join("")}
+  </section>`;
+}
+
+function projects() {
+  const fmtShort = ym => { if (!ym) return ""; const [y, m] = ym.split("-"); return m ? `${m}/${y.slice(2)}` : y; };
+  const privateRepos = ["https://github.com/philipsantiago/DailyHabit"];
+  return `<section id="projects">
+    <h2>Projects</h2>
+    ${byDateDesc(SITE.projects).map(p => {
+      const dateParts = [fmtShort(p.date), p.status].filter(Boolean).join("  ");
+      const showGithub = has(p.github) && !privateRepos.includes(p.github);
+      const links = [showGithub ? `<a href="${esc(p.github)}" target="_blank" rel="noopener">GitHub</a>` : "", has(p.live) ? `<a href="${esc(p.live)}" target="_blank" rel="noopener">Live</a>` : ""].filter(Boolean).join("");
+      return `<article class="entry">
+      <h3>${esc(p.title)}${dateParts ? `<span class="inline-date">${esc(dateParts)}</span>` : ""}</h3>
+      ${has(p.dek) ? `<p class="entry-dek">${esc(p.dek)}</p>` : ""}
+      ${links ? `<p class="ext-link">${links}</p>` : ""}
+    </article>`;}).join("")}
+  </section>`;
+}
+
+function adventures() {
+  const realMedia = arr => arr.filter(Boolean);
+  const isVideo = src => /\.(mov|mp4|m4v|webm)$/i.test(src);
+  return `<section id="adventures">
+    <h2>Adventures</h2>
+    <p class="dek">\u201cNot all those who wander are lost.\u201d \u2014 J.R.R. Tolkien</p>
+    ${SITE.adventures.map((a, idx) => {
+      const media = realMedia(a.photos);
+      return `<article class="entry">
+      <h3>${esc(a.title)}</h3>
+      ${has(a.subtitle) ? `<p class="meta">${esc(a.subtitle)}</p>` : ""}
+      ${has(a.body) ? `<p class="entry-dek">${esc(a.body)}</p>` : ""}
+      ${has(a.why) ? `<p class="why">${esc(a.why)}</p>` : ""}
+      ${media.length ? `<button class="photos-btn" data-adv="${idx}">View photos (${media.length})</button>` : ""}
+    </article>`;}).join("")}
+  </section>
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-head"><h3 id="lb-title"></h3><button class="lightbox-close">\u00d7</button></div>
+    <div class="lightbox-grid" id="lb-grid"></div>
+  </div>`;
+}
+
+function openLightbox(idx) {
+  const a = SITE.adventures[idx];
+  const media = a.photos.filter(Boolean);
+  const isVideo = src => /\.(mov|mp4|m4v|webm)$/i.test(src);
+  document.getElementById("lb-title").textContent = a.title;
+  document.getElementById("lb-grid").innerHTML = media.map((src, i) =>
+    isVideo(src)
+      ? `<video src="${esc(src)}" controls preload="metadata" playsinline></video>`
+      : `<a href="${esc(src)}" target="_blank"><img src="${esc(src)}" alt="${esc(a.title)}, photo ${i + 1}" loading="lazy"></a>`
+  ).join("");
+  const lb = document.getElementById("lightbox");
+  lb.classList.add("open");
+  lb.scrollTop = 0;
+  document.body.style.overflow = "hidden";
+}
+
+function closeLightbox() {
+  document.getElementById("lightbox").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+function consume() {
+  const { now, shelves } = SITE.consume;
+  const names = Object.keys(shelves).filter(k => has(shelves[k]));
+  return `<section id="consume">
+    <h2>Consume, consume, consume</h2>
+    <p class="dek">What I’m reading, watching, and listening to (consume!). Send recs.</p>
+    ${has(now) ? `<div class="now"><h3>Right now</h3><ul>${now.map(n =>
+      `<li><span class="kind">${esc(n.kind)}:</span> ${esc(n.title)}${n.by ? `, ${esc(n.by)}` : ""}</li>`).join("")}</ul></div>` : ""}
+    <div class="tabs" role="tablist" aria-label="Favorites">${names.map((n, i) =>
+      `<button role="tab" id="tab-${i}" aria-controls="shelf" aria-selected="${i === 0}" data-shelf="${esc(n)}">${esc(n)}</button>`).join("")}</div>
+    <ul class="shelf" id="shelf" role="tabpanel"></ul>
+  </section>`;
+}
+
+function renderShelf(name) {
+  const items = SITE.consume.shelves[name] || [];
+  const el = document.getElementById("shelf");
+  if (name === "Movies") {
+    el.className = "poster-grid";
+    el.innerHTML = items.map(it => {
+      if (it.url && it.title === "Letterboxd") {
+        return `<li><p class="meta" style="margin:0;grid-column:1/-1">${link(it.url, "Find more on Letterboxd")} <span style="color:var(--muted);font-style:italic">(not fully updated)</span></p></li>`;
+      }
+      const poster = it.poster ? `<img src="${esc(it.poster)}" alt="${esc(it.title)}" loading="lazy">` : `<div style="aspect-ratio:2/3;background:var(--placeholder)"></div>`;
+      return `<li>${poster}<span class="poster-title">${esc(it.title)}</span></li>`;
+    }).join("");
+  } else {
+    el.className = "shelf";
+    el.innerHTML = items.map(it => `<li>
+      <span class="title">${has(it.url) ? link(it.url, it.title) : esc(it.title)}</span>${it.by ? `<span class="by">, ${esc(it.by)}</span>` : ""}
+      ${has(it.note) ? `<span class="note">${esc(it.note)}</span>` : ""}
+    </li>`).join("");
+  }
+}
+
+const VIEWS = ["about", "writing", "projects", "adventures", "consume"];
+
+function showView() {
+  const hash = location.hash.slice(1) || "about";
+  VIEWS.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.hidden = id !== hash;
+  });
+  document.querySelectorAll("nav.sections a").forEach(a => {
+    a.classList.toggle("active", a.getAttribute("href") === "#" + hash);
+  });
+  window.scrollTo(0, 0);
+}
+
+function render() {
+  document.title = SITE.name;
+  document.getElementById("app").innerHTML =
+    masthead() + nav() + about() + writing() + projects() + adventures() + consume() +
+    `<footer>© ${new Date().getFullYear()} ${esc(SITE.name)}</footer>`;
+
+  const tabs = [...document.querySelectorAll(".tabs button")];
+  tabs.forEach(btn => btn.addEventListener("click", () => {
+    tabs.forEach(b => b.setAttribute("aria-selected", String(b === btn)));
+    document.getElementById("shelf").setAttribute("aria-labelledby", btn.id);
+    renderShelf(btn.dataset.shelf);
+  }));
+  if (tabs[0]) { document.getElementById("shelf").setAttribute("aria-labelledby", tabs[0].id); renderShelf(tabs[0].dataset.shelf); }
+
+  document.querySelectorAll(".photos-btn").forEach(btn => {
+    btn.addEventListener("click", () => openLightbox(Number(btn.dataset.adv)));
+  });
+  document.querySelector(".lightbox-close").addEventListener("click", closeLightbox);
+  document.getElementById("lightbox").addEventListener("click", e => {
+    if (e.target === e.currentTarget) closeLightbox();
+  });
+
+  window.addEventListener("hashchange", showView);
+  showView();
+}
+render();
+</script>
+</body>
+</html>
