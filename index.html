@@ -190,7 +190,7 @@ const SITE = {
     { label: "Email", url: "mailto:profitalec@gmail.com" },
     { label: "Resume", url: "" }
   ],
-  substack: "",
+  substack: "https://substack.com/@alecprofit",
 
   writing: [
     { title: "Bukele's Mano Dura: Questions of Sustainability in El Salvador", date: "2024-04", dek: "On Bukele's crackdown on gang violence, its democratic tradeoffs, and whether El Salvador's newfound security can last. Written for the Rice Journal of Public Policy.", url: "https://ricejpp.wixsite.com/home/post/bukele-s-mano-dura-questions-of-sustainability-in-el-salvador" },
@@ -592,6 +592,7 @@ function writing() {
   const fmtShort = ym => { if (!ym) return ""; const [y, m] = ym.split("-"); return m ? `${m}/${y.slice(2)}` : y; };
   return `<section id="writing">
     <h2>Writing</h2>
+    ${has(SITE.substack) ? `<p class="ext-link" style="margin:0 0 1rem">${link(SITE.substack, "Substack")}</p>` : ""}
     ${byDateDesc(SITE.writing).map(w => `<article class="entry">
       <h3>${esc(w.title)}${has(w.date) ? `<span class="inline-date">${esc(fmtShort(w.date))}</span>` : ""}</h3>
       ${has(w.dek) ? `<p class="entry-dek">${esc(w.dek)}</p>` : ""}
