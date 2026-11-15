@@ -90,12 +90,12 @@ section > .dek { margin: 0 0 1.5rem; color: var(--muted); font: 400 0.9375rem/1.
 .more { font: 500 0.875rem/1 var(--sans); color: var(--ink); }
 
 /* About */
-.about { display: grid; grid-template-columns: 16rem 1fr; gap: 1.75rem; align-items: start; }
+.about { display: grid; grid-template-columns: 13rem 1fr; gap: 1.75rem; align-items: start; }
 .photo { aspect-ratio: 4 / 5; background: var(--placeholder); display: grid; place-items: center;
   color: var(--muted); font: 400 0.8125rem/1.3 var(--sans); text-align: center; padding: 0.5rem; }
-.photo img { width: 100%; height: 100%; object-fit: cover; filter: brightness(1.3); }
+.photo img { width: 100%; height: 100%; object-fit: cover; }
 .about p { margin: 0 0 1rem; font: 400 0.9375rem/1.7 var(--sans); color: var(--body); }
-@media (max-width: 34rem) { .about { grid-template-columns: 1fr; } .photo { max-width: 16rem; } }
+@media (max-width: 34rem) { .about { grid-template-columns: 1fr; } .photo { max-width: 13rem; } }
 
 /* Lists of entries (writing, projects, adventures) */
 .entry { padding: 1.25rem 0; border-top: 1px solid var(--rule); }
@@ -176,7 +176,7 @@ footer { margin: 4rem 0 3rem; padding-top: 1rem; border-top: 1px solid var(--rul
 const SITE = {
   name: "Alexander Profit",
   tagline: "Love technology, people, and places. Wandering, always.",
-  photo: "assets/cover photo/IMG_4089.jpeg",
+  photo: "assets/newpfp/IMG_4586.jpeg",
   email: "aprofit@stanford.edu",
   phone: "+1 650 250 3100",
   bio: [
